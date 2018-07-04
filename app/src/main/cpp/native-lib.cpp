@@ -9,14 +9,7 @@ using namespace cv;
 using namespace std;
 
 extern "C"
-JNIEXPORT jstring JNICALL
-Java_com_rambo_opencvtest_MainActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
-}
-
+{
 void JNICALL Java_com_rambo_opencvtest_MainActivity_salt(JNIEnv *env, jobject instance,
                                                                            jlong matAddrGray,
                                                                            jint nbrElem) {
@@ -26,4 +19,15 @@ void JNICALL Java_com_rambo_opencvtest_MainActivity_salt(JNIEnv *env, jobject in
         int j = rand() % mGr.rows;
         mGr.at<uchar>(j, i) = 255;
     }
+}
+
+void JNICALL Java_com_rambo_opencvtest_MainActivity_blur(JNIEnv *env, jobject instance, jlong matAddrRgb){
+    Mat &mRgb = *(Mat *) matAddrRgb;
+    blur(mRgb, mRgb, Size(15,15));
+}
+
+void JNICALL Java_com_rambo_opencvtest_MainActivity_EdgeDetection (JNIEnv *env, jobject instance, jlong matAddrGray){
+    Mat &mGray = *(Mat *) matAddrGray;
+    Canny(mGray,mGray,50, 100, 3);
+}
 }
