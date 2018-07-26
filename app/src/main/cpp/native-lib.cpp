@@ -30,4 +30,9 @@ void JNICALL Java_com_rambo_opencvtest_MainActivity_EdgeDetection (JNIEnv *env, 
     Mat &mGray = *(Mat *) matAddrGray;
     Canny(mGray,mGray,50, 100, 3);
 }
+
+void JNICALL Java_com_rambo_opencvtest_MainActivity_Histogram (JNIEnv *env, jobject instance, jlong matAddrGray){
+    Mat &mGray = *(Mat *) matAddrGray;
+    equalizeHist(mGray,mGray);
+}
 }
