@@ -148,51 +148,54 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
         final int[] position = new int[1];
         //get each frame from camera
         mRgba = inputFrame.rgba();
-        mGray = inputFrame.gray();
+//        mGray = inputFrame.gray();
+//
+//        /**********HSV conversion**************/
+//        //convert mat rgb to mat hsv
+//        Imgproc.cvtColor(mRgba, mHsv, Imgproc.COLOR_RGB2HSV);
+//
+//        //find scalar sum of hsv
+//        Scalar mColorHsv = Core.sumElems(mHsv);
+//
+//        int pointCount = 320*240;
+//
+//
+//        //convert each pixel
+//        for (int i = 0; i < mColorHsv.val.length; i++) {
+//            mColorHsv.val[i] /= pointCount;
+//        }
+//
+//        //convert hsv scalar to rgb scalar
+//        Scalar mColorRgb = convertScalarHsv2Rgba(mColorHsv);
+//
+//    /*Log.d("intensity", "Color: #" + String.format("%02X", (int)mColorHsv.val[0])
+//            + String.format("%02X", (int)mColorHsv.val[1])
+//            + String.format("%02X", (int)mColorHsv.val[2]) );*/
+//        //print scalar value
+//        Log.d("intensity", "R:"+ String.valueOf(mColorRgb.val[0])+" G:"+String.valueOf(mColorRgb.val[1])+" B:"+String.valueOf(mColorRgb.val[2]));
+//
+//        /*Convert to YUV*/
+//
+//        int R = (int) mColorRgb.val[0];
+//        int G = (int) mColorRgb.val[1];
+//        int B = (int) mColorRgb.val[2];
+//
+//        int Y = (int) (R *  .299000 + G *  .587000 + B *  .114000);
+//        int U = (int) (R * -.168736 + G * -.331264 + B *  .500000 + 128);
+//        int V = (int) (R *  .500000 + G * -.418688 + B * -.081312 + 128);
+//
+//        //int I = (R+G+B)/3;
+//
+//
+//        //Log.d("intensity", "I: "+String.valueOf(I));
+//        Log.d("intensity", "Y:"+ String.valueOf(Y)+" U:"+String.valueOf(U)+" V:"+String.valueOf(V));
+//
+////        salt(mGray.getNativeObjAddr(), 5000);
+////        return mGray;
+////        blur(mRgba.getNativeObjAddr());
 
-        /**********HSV conversion**************/
-        //convert mat rgb to mat hsv
-        Imgproc.cvtColor(mRgba, mHsv, Imgproc.COLOR_RGB2HSV);
+        DrawOnFrame(mRgba.getNativeObjAddr());
 
-        //find scalar sum of hsv
-        Scalar mColorHsv = Core.sumElems(mHsv);
-
-        int pointCount = 320*240;
-
-
-        //convert each pixel
-        for (int i = 0; i < mColorHsv.val.length; i++) {
-            mColorHsv.val[i] /= pointCount;
-        }
-
-        //convert hsv scalar to rgb scalar
-        Scalar mColorRgb = convertScalarHsv2Rgba(mColorHsv);
-
-    /*Log.d("intensity", "Color: #" + String.format("%02X", (int)mColorHsv.val[0])
-            + String.format("%02X", (int)mColorHsv.val[1])
-            + String.format("%02X", (int)mColorHsv.val[2]) );*/
-        //print scalar value
-        Log.d("intensity", "R:"+ String.valueOf(mColorRgb.val[0])+" G:"+String.valueOf(mColorRgb.val[1])+" B:"+String.valueOf(mColorRgb.val[2]));
-
-        /*Convert to YUV*/
-
-        int R = (int) mColorRgb.val[0];
-        int G = (int) mColorRgb.val[1];
-        int B = (int) mColorRgb.val[2];
-
-        int Y = (int) (R *  .299000 + G *  .587000 + B *  .114000);
-        int U = (int) (R * -.168736 + G * -.331264 + B *  .500000 + 128);
-        int V = (int) (R *  .500000 + G * -.418688 + B * -.081312 + 128);
-
-        //int I = (R+G+B)/3;
-
-
-        //Log.d("intensity", "I: "+String.valueOf(I));
-        Log.d("intensity", "Y:"+ String.valueOf(Y)+" U:"+String.valueOf(U)+" V:"+String.valueOf(V));
-
-//        salt(mGray.getNativeObjAddr(), 5000);
-//        return mGray;
-//        blur(mRgba.getNativeObjAddr());
 
         return mRgba;
     }
@@ -212,4 +215,6 @@ public class MainActivity extends AppCompatActivity implements CameraBridgeViewB
     public native void EdgeDetection(long matAddrGray);
 
     public native void Histogram(long matAddrGray);
+
+    public native void DrawOnFrame(long matAddrRgba);
 }

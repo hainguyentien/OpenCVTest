@@ -3,6 +3,7 @@
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/features2d/features2d.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <vector>
 
 using namespace cv;
@@ -34,5 +35,10 @@ void JNICALL Java_com_rambo_opencvtest_MainActivity_EdgeDetection (JNIEnv *env, 
 void JNICALL Java_com_rambo_opencvtest_MainActivity_Histogram (JNIEnv *env, jobject instance, jlong matAddrGray){
     Mat &mGray = *(Mat *) matAddrGray;
     equalizeHist(mGray,mGray);
+}
+
+void JNICALL Java_com_rambo_opencvtest_MainActivity_DrawOnFrame (JNIEnv *env, jobject instance, jlong matAddrRgba){
+    Mat &mRgba = * (Mat *) matAddrRgba;
+    rectangle(mRgba, cvPoint(200,200),cvPoint(600,600),CV_RGB(255,0,0),5,8);
 }
 }
